@@ -1,268 +1,419 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mario William | Elite Identity</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --bg: #000000;
-            --bg-card: rgba(10, 10, 10, 0.6);
-            --gold: #D4AF37;
-            --gold-light: #F4D03F;
-            --text: #FFFFFF;
-            --muted: #9C9C9C;
-            --glass: rgba(255, 255, 255, 0.05);
-            --border: rgba(212, 175, 55, 0.2);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mario William</title>
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Inter', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow-x: hidden;
-            background: radial-gradient(circle at 50% 50%, #111111 0%, #000000 100%);
-        }
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-        #particle-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-        .container {
-            position: relative;
-            z-index: 1;
-            width: 90%;
-            max-width: 420px;
-            padding: 40px 20px;
-        }
+<style>
 
-        .card {
-            background: var(--bg-card);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: 50px 30px;
-            text-align: center;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+:root{
+--gold:#D4AF37;
+--gold2:#f4d97a;
+--black:#050505;
+--card:#111111;
+--text:#ffffff;
+--muted:#9b9b9b;
+}
 
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
-        /* Monogram */
-        .monogram-container { margin-bottom: 30px; position: relative; }
-        .monogram { width: 80px; height: 80px; margin: 0 auto; fill: var(--gold); }
-        .glow { filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.4)); }
+body{
+background:#000;
+color:white;
+font-family:Inter,sans-serif;
+overflow-x:hidden;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:30px 15px;
+position:relative;
+}
 
-        h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.2rem;
-            font-weight: 300;
-            letter-spacing: 0.1em;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at center,
+rgba(212,175,55,.08),
+transparent 40%);
+pointer-events:none;
+}
 
-        .divider {
-            width: 50px;
-            height: 1px;
-            background: var(--gold);
-            margin: 20px auto 25px;
-            opacity: 0.5;
-        }
+#particles{
+position:fixed;
+inset:0;
+z-index:0;
+}
 
-        .quote {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.1rem;
-            font-style: italic;
-            color: var(--muted);
-            margin-bottom: 40px;
-        }
+.container{
+width:100%;
+max-width:450px;
+position:relative;
+z-index:5;
+}
 
-        /* Action Cards */
-        .action-list { display: flex; flex-direction: column; gap: 15px; }
-        .action-card {
-            display: flex;
-            align-items: center;
-            padding: 16px 20px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 2px;
-            text-decoration: none;
-            color: white;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
-        }
+.card{
+background:rgba(12,12,12,.78);
+backdrop-filter:blur(30px);
+border:1px solid rgba(212,175,55,.15);
+padding:40px 25px;
+border-radius:24px;
+box-shadow:
+0 20px 60px rgba(0,0,0,.7),
+0 0 50px rgba(212,175,55,.03);
+overflow:hidden;
+}
 
-        .action-card:hover {
-            border-color: var(--gold);
-            background: rgba(212, 175, 55, 0.05);
-            transform: translateX(5px);
-        }
+.logo-wrap{
+display:flex;
+justify-content:center;
+margin-bottom:20px;
+opacity:0;
+transform:translateY(50px) scale(.9);
+animation:logoReveal 1.5s forwards;
+}
 
-        .icon-box {
-            font-size: 1.2rem;
-            color: var(--gold);
-            margin-right: 20px;
-            width: 25px;
-        }
+.logo{
+width:100%;
+max-width:320px;
+filter:
+drop-shadow(0 0 10px rgba(212,175,55,.2))
+drop-shadow(0 0 40px rgba(212,175,55,.1));
+}
 
-        .text-box { text-align: left; }
-        .text-box h3 { font-size: 0.9rem; font-weight: 400; letter-spacing: 0.05em; }
-        .text-box p { font-size: 0.7rem; color: var(--muted); margin-top: 2px; }
+.quote{
+font-family:"Cormorant Garamond",serif;
+font-size:1.35rem;
+text-align:center;
+font-style:italic;
+line-height:1.4;
+color:#d6d6d6;
+margin-top:10px;
+margin-bottom:35px;
 
-        /* Save CTA */
-        .save-btn {
-            margin-top: 30px;
-            width: 100%;
-            padding: 18px;
-            background: var(--gold);
-            border: none;
-            color: black;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .save-btn:hover {
-            background: var(--text);
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
-        }
-    </style>
+opacity:0;
+transform:translateY(20px);
+
+animation:fadeUp 1s forwards;
+animation-delay:1.2s;
+}
+
+.divider{
+width:70px;
+height:1px;
+background:var(--gold);
+margin:20px auto;
+opacity:.5;
+}
+
+.action-list{
+display:flex;
+flex-direction:column;
+gap:16px;
+}
+
+.action-card{
+display:flex;
+align-items:center;
+padding:18px;
+background:rgba(255,255,255,.02);
+border:1px solid rgba(255,255,255,.06);
+border-radius:18px;
+text-decoration:none;
+color:white;
+transition:.4s;
+position:relative;
+overflow:hidden;
+
+opacity:0;
+transform:translateX(-30px);
+}
+
+.action-card:nth-child(1){
+animation:cardIn .8s forwards;
+animation-delay:1.7s;
+}
+
+.action-card:nth-child(2){
+animation:cardIn .8s forwards;
+animation-delay:1.9s;
+}
+
+.action-card:nth-child(3){
+animation:cardIn .8s forwards;
+animation-delay:2.1s;
+}
+
+.action-card:nth-child(4){
+animation:cardIn .8s forwards;
+animation-delay:2.3s;
+}
+
+.action-card::before{
+content:"";
+position:absolute;
+left:-120%;
+top:0;
+width:100%;
+height:100%;
+background:linear-gradient(
+90deg,
+transparent,
+rgba(212,175,55,.15),
+transparent
+);
+transition:.8s;
+}
+
+.action-card:hover::before{
+left:120%;
+}
+
+.action-card:hover{
+transform:translateY(-5px);
+border-color:var(--gold);
+box-shadow:
+0 0 20px rgba(212,175,55,.15),
+0 0 50px rgba(212,175,55,.08);
+}
+
+.icon{
+width:58px;
+height:58px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+font-size:1.2rem;
+color:var(--gold);
+background:rgba(212,175,55,.08);
+margin-right:15px;
+transition:.4s;
+}
+
+.action-card:hover .icon{
+transform:rotate(10deg) scale(1.15);
+box-shadow:0 0 20px rgba(212,175,55,.3);
+}
+
+.text h3{
+font-size:1rem;
+font-weight:500;
+}
+
+.text p{
+font-size:.8rem;
+color:#a5a5a5;
+margin-top:4px;
+}
+
+.save-btn{
+margin-top:25px;
+width:100%;
+height:60px;
+border:none;
+border-radius:18px;
+cursor:pointer;
+font-size:.9rem;
+font-weight:700;
+letter-spacing:2px;
+background:linear-gradient(
+135deg,
+var(--gold),
+var(--gold2)
+);
+
+color:black;
+
+opacity:0;
+animation:fadeUp 1s forwards;
+animation-delay:2.8s;
+
+transition:.4s;
+}
+
+.save-btn:hover{
+transform:translateY(-3px);
+box-shadow:
+0 0 30px rgba(212,175,55,.3);
+}
+
+@keyframes logoReveal{
+to{
+opacity:1;
+transform:translateY(0) scale(1);
+}
+}
+
+@keyframes fadeUp{
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+@keyframes cardIn{
+to{
+opacity:1;
+transform:translateX(0);
+}
+}
+
+</style>
 </head>
 <body>
 
-<canvas id="particle-canvas"></canvas>
+<canvas id="particles"></canvas>
 
 <div class="container">
-    <div class="card">
-        <div class="monogram-container">
-            <svg class="monogram glow" viewBox="0 0 100 100">
-                <path d="M10 80 L35 20 L50 60 L65 20 L90 80 M25 80 L25 50 M75 80 L75 50" fill="none" stroke="currentColor" stroke-width="2"/>
-                <path d="M50 90 L50 10 M10 50 L90 50" stroke="currentColor" stroke-width="0.5" opacity="0.3"/>
-            </svg>
-        </div>
-        
-        <h1>Mario William</h1>
-        <div class="divider"></div>
-        <p class="quote">"Behind every flag stood a thousand unseen jumps."</p>
 
-        <div class="action-list">
-            <a href="tel:+201211121713" class="action-card">
-                <div class="icon-box"><i class="fas fa-phone"></i></div>
-                <div class="text-box">
-                    <h3>Call Me</h3>
-                    <p>Direct Contact</p>
-                </div>
-            </a>
-            <a href="https://wa.me/201211121713" class="action-card">
-                <div class="icon-box"><i class="fab fa-whatsapp"></i></div>
-                <div class="text-box">
-                    <h3>WhatsApp</h3>
-                    <p>Quick Conversation</p>
-                </div>
-            </a>
-            <a href="https://www.instagram.com/mario_hossam" class="action-card">
-                <div class="icon-box"><i class="fab fa-instagram"></i></div>
-                <div class="text-box">
-                    <h3>Instagram</h3>
-                    <p>Follow My Journey</p>
-                </div>
-            </a>
-            <a href="mailto:mariohossam16@gmail.com" class="action-card">
-                <div class="icon-box"><i class="fas fa-envelope"></i></div>
-                <div class="text-box">
-                    <h3>Email</h3>
-                    <p>Professional Contact</p>
-                </div>
-            </a>
-        </div>
+<div class="card">
 
-        <button class="save-btn" onclick="downloadVCard()">Save to Contacts</button>
-    </div>
+<div class="logo-wrap">
+<img src="logo.png" class="logo">
+</div>
+
+<div class="divider"></div>
+
+<p class="quote">
+Behind every flag stood<br>
+a thousand unseen jumps.
+</p>
+
+<div class="action-list">
+
+<a href="tel:+201211121713" class="action-card">
+<div class="icon">
+<i class="fas fa-phone"></i>
+</div>
+<div class="text">
+<h3>Call Me</h3>
+<p>Direct Contact</p>
+</div>
+</a>
+
+<a href="https://wa.me/201211121713" class="action-card">
+<div class="icon">
+<i class="fab fa-whatsapp"></i>
+</div>
+<div class="text">
+<h3>WhatsApp</h3>
+<p>Quick Conversation</p>
+</div>
+</a>
+
+<a href="https://www.instagram.com/mario_hossam" class="action-card">
+<div class="icon">
+<i class="fab fa-instagram"></i>
+</div>
+<div class="text">
+<h3>Instagram</h3>
+<p>Follow My Journey</p>
+</div>
+</a>
+
+<a href="mailto:mariohossam16@gmail.com" class="action-card">
+<div class="icon">
+<i class="fas fa-envelope"></i>
+</div>
+<div class="text">
+<h3>Email</h3>
+<p>Professional Contact</p>
+</div>
+</a>
+
+</div>
+
+<button class="save-btn" onclick="downloadVCard()">
+SAVE CONTACT
+</button>
+
+</div>
+
 </div>
 
 <script>
-    // Particle background animation
-    const canvas = document.getElementById('particle-canvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
 
-    function resize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resize);
-    resize();
+function downloadVCard(){
 
-    class Particle {
-        constructor() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.vx = (Math.random() - 0.5) * 0.5;
-            this.vy = (Math.random() - 0.5) * 0.5;
-            this.size = Math.random() * 2;
-        }
-        draw() {
-            ctx.fillStyle = 'rgba(212, 175, 55, 0.15)';
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fill();
-        }
-        update() {
-            this.x += this.vx;
-            this.y += this.vy;
-            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-        }
-    }
-
-    for (let i = 0; i < 40; i++) particles.push(new Particle());
-
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => { p.update(); p.draw(); });
-        requestAnimationFrame(animate);
-    }
-    animate();
-
-    // vCard Generator
-    function downloadVCard() {
-        const vcard = `BEGIN:VCARD
+const vcard=`BEGIN:VCARD
 VERSION:3.0
 FN:Mario William
-TEL;TYPE=CELL:+201211121713
+TEL:+201211121713
 EMAIL:mariohossam16@gmail.com
-NOTE:Instagram: @mario_hossam
 END:VCARD`;
-        const blob = new Blob([vcard], { type: 'text/vcard' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'Mario_William.vcf';
-        a.click();
-        URL.revokeObjectURL(url);
-    }
+
+const blob=new Blob([vcard],{type:'text/vcard'});
+const url=URL.createObjectURL(blob);
+
+const a=document.createElement('a');
+a.href=url;
+a.download='Mario_William.vcf';
+a.click();
+
+URL.revokeObjectURL(url);
+}
+
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+
+function resize(){
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+}
+resize();
+window.addEventListener("resize",resize);
+
+let particles=[];
+
+for(let i=0;i<35;i++){
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*2+1,
+vx:(Math.random()-.5)*0.15,
+vy:(Math.random()-.5)*0.15
+});
+}
+
+function animate(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+particles.forEach(p=>{
+
+p.x+=p.vx;
+p.y+=p.vy;
+
+if(p.x<0)p.x=canvas.width;
+if(p.x>canvas.width)p.x=0;
+
+if(p.y<0)p.y=canvas.height;
+if(p.y>canvas.height)p.y=0;
+
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fillStyle="rgba(212,175,55,.18)";
+ctx.fill();
+
+});
+
+requestAnimationFrame(animate);
+}
+
+animate();
+
 </script>
 
 </body>

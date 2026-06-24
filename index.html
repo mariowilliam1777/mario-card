@@ -2,133 +2,61 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mario William | Digital Identity</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <title>Mario William | Elite Identity</title>
     <style>
-        :root {
-            --gold: #C5A059;
-            --gold-light: #F4E4BC;
-            --bg: #000000;
+        :root { --gold: #C5A059; --bg: #0a0a0a; }
+        body { 
+            margin: 0; background-color: var(--bg); color: #fff;
+            font-family: 'Cormorant Garamond', serif;
+            display: flex; justify-content: center; align-items: center; min-height: 100vh;
+            background-image: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
         }
-
-        body, html { margin: 0; padding: 0; background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; height: 100%; }
-
-        /* Animated Particles */
-        #canvas { position: fixed; top: 0; left: 0; z-index: 0; opacity: 0.4; }
-
-        .container {
-            position: relative;
-            z-index: 1;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+        .main-card {
+            width: 350px; padding: 50px 30px;
+            background: rgba(15, 15, 15, 0.9);
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            border-radius: 2px; text-align: center;
+            box-shadow: 0 0 60px rgba(0,0,0,0.8);
         }
-
-        /* Card Frame */
-        .card {
-            width: 100%;
-            max-width: 420px;
-            padding: 40px;
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--gold);
-            border-radius: 4px;
-            text-align: center;
-            box-shadow: 0 0 40px rgba(197, 160, 89, 0.15);
-        }
-
-        /* Monogram */
-        .monogram { 
-            width: 80px; height: 80px; margin: 0 auto 20px; 
-            border: 1px solid var(--gold); transform: rotate(45deg);
-            display: flex; align-items: center; justify-content: center;
-        }
-        .monogram span { transform: rotate(-45deg); font-family: 'Cormorant Garamond'; font-size: 2rem; color: var(--gold); }
-
-        h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; margin: 0; letter-spacing: 2px; text-transform: uppercase; }
-        .quote { font-style: italic; font-family: 'Cormorant Garamond'; color: #aaa; margin: 20px 0; }
-        .quote::after { content: ''; display: block; width: 40px; height: 1px; background: var(--gold); margin: 15px auto 0; }
-
-        /* Actions Grid */
-        .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
-        .btn {
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
-            padding: 20px 10px; color: white; text-decoration: none; border-radius: 2px;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            display: flex; flex-direction: column; align-items: center; gap: 10px;
-        }
-        .btn i { font-size: 1.2rem; }
-        .btn:hover { background: rgba(197, 160, 89, 0.1); border-color: var(--gold); color: var(--gold); }
-
-        .btn.whatsapp:hover { border-color: #25D366; color: #25D366; }
-        .btn.instagram:hover { border-color: #E1306C; color: #E1306C; }
-
-        .save-btn { 
-            margin-top: 20px; width: 100%; padding: 15px; border: 1px solid var(--gold); 
-            background: transparent; color: var(--gold); cursor: pointer; text-transform: uppercase; letter-spacing: 2px;
-        }
+        .logo-img { width: 220px; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 10px rgba(197, 160, 89, 0.5)); }
+        .quote { font-style: italic; color: var(--gold); margin-bottom: 40px; font-size: 1.1rem; opacity: 0.9; }
         
-        #qrcode { margin-top: 40px; display: inline-block; background: white; padding: 10px; border-radius: 2px; }
+        .action-link {
+            display: block; padding: 15px; margin: 15px 0;
+            border: 1px solid var(--gold); color: #fff;
+            text-decoration: none; text-transform: uppercase;
+            letter-spacing: 3px; font-size: 0.8rem; transition: 0.5s;
+        }
+        .action-link:hover { background: var(--gold); color: #000; }
+        
+        .save-btn { 
+            margin-top: 30px; background: var(--gold); border: none; padding: 12px 30px;
+            color: black; font-weight: bold; cursor: pointer; text-transform: uppercase;
+        }
     </style>
 </head>
 <body>
 
-<canvas id="canvas"></canvas>
+<div class="main-card">
+    <!-- استخدام اللوجو اللي بعته -->
+    <img src="MW3.png" alt="Mario William Logo" class="logo-img">
+    
+    <p class="quote">"Behind every flag stood a thousand unseen jumps"</p>
 
-<div class="container">
-    <div class="card">
-        <div class="monogram"><span>MW</span></div>
-        <h1>Mario William</h1>
-        <p class="quote">"Behind every flag stood a thousand unseen jumps"</p>
+    <a href="tel:+201211121713" class="action-link">Call</a>
+    <a href="https://wa.me/201211121713" class="action-link">WhatsApp</a>
+    <a href="https://www.instagram.com/mario_hossam" class="action-link">Instagram</a>
+    <a href="mailto:mariohossam16@gmail.com" class="action-link">Email</a>
 
-        <div class="actions">
-            <a href="tel:+201211121713" class="btn"> <i class="fas fa-phone"></i> Call </a>
-            <a href="https://wa.me/201211121713" class="btn whatsapp"> <i class="fab fa-whatsapp"></i> WhatsApp </a>
-            <a href="https://www.instagram.com/mario_hossam" class="btn instagram"> <i class="fab fa-instagram"></i> Instagram </a>
-            <a href="mailto:mariohossam16@gmail.com" class="btn"> <i class="fas fa-envelope"></i> Email </a>
-        </div>
-
-        <button class="save-btn" onclick="downloadVCard()">Save Contact</button>
-
-        <div id="qrcode"></div>
-    </div>
+    <button class="save-btn" onclick="downloadVCard()">Add to Contacts</button>
 </div>
 
 <script>
-    // Particle Animation
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-    const particles = [];
-    
-    function animate() {
-        ctx.clearRect(0,0, canvas.width, canvas.height);
-        ctx.fillStyle = "#C5A059";
-        particles.forEach(p => {
-            p.y -= p.speed;
-            ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fill();
-        });
-        requestAnimationFrame(animate);
-    }
-    for(let i=0; i<30; i++) particles.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*1.5, speed: Math.random()*0.5});
-    animate();
-
-    // QR Code
-    new QRCode(document.getElementById("qrcode"), { text: window.location.href, width: 100, height: 100 });
-
-    // VCard
     function downloadVCard() {
         const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:Mario William\nTEL;TYPE=CELL:+201211121713\nEMAIL:mariohossam16@gmail.com\nEND:VCARD`;
         const blob = new Blob([vcard], { type: 'text/vcard' });
         const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'Mario_William.vcf'; a.click();
     }
 </script>
-
 </body>
 </html>

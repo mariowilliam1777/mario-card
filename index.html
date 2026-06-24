@@ -2,61 +2,268 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Mario William | Elite Identity</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --gold: #C5A059; --bg: #0a0a0a; }
-        body { 
-            margin: 0; background-color: var(--bg); color: #fff;
+        :root {
+            --bg: #000000;
+            --bg-card: rgba(10, 10, 10, 0.6);
+            --gold: #D4AF37;
+            --gold-light: #F4D03F;
+            --text: #FFFFFF;
+            --muted: #9C9C9C;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(212, 175, 55, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            background: radial-gradient(circle at 50% 50%, #111111 0%, #000000 100%);
+        }
+
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 90%;
+            max-width: 420px;
+            padding: 40px 20px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 50px 30px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Monogram */
+        .monogram-container { margin-bottom: 30px; position: relative; }
+        .monogram { width: 80px; height: 80px; margin: 0 auto; fill: var(--gold); }
+        .glow { filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.4)); }
+
+        h1 {
             font-family: 'Cormorant Garamond', serif;
-            display: flex; justify-content: center; align-items: center; min-height: 100vh;
-            background-image: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
+            font-size: 2.2rem;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
         }
-        .main-card {
-            width: 350px; padding: 50px 30px;
-            background: rgba(15, 15, 15, 0.9);
-            border: 1px solid rgba(197, 160, 89, 0.3);
-            border-radius: 2px; text-align: center;
-            box-shadow: 0 0 60px rgba(0,0,0,0.8);
+
+        .divider {
+            width: 50px;
+            height: 1px;
+            background: var(--gold);
+            margin: 20px auto 25px;
+            opacity: 0.5;
         }
-        .logo-img { width: 220px; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 10px rgba(197, 160, 89, 0.5)); }
-        .quote { font-style: italic; color: var(--gold); margin-bottom: 40px; font-size: 1.1rem; opacity: 0.9; }
-        
-        .action-link {
-            display: block; padding: 15px; margin: 15px 0;
-            border: 1px solid var(--gold); color: #fff;
-            text-decoration: none; text-transform: uppercase;
-            letter-spacing: 3px; font-size: 0.8rem; transition: 0.5s;
+
+        .quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--muted);
+            margin-bottom: 40px;
         }
-        .action-link:hover { background: var(--gold); color: #000; }
-        
-        .save-btn { 
-            margin-top: 30px; background: var(--gold); border: none; padding: 12px 30px;
-            color: black; font-weight: bold; cursor: pointer; text-transform: uppercase;
+
+        /* Action Cards */
+        .action-list { display: flex; flex-direction: column; gap: 15px; }
+        .action-card {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 2px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-card:hover {
+            border-color: var(--gold);
+            background: rgba(212, 175, 55, 0.05);
+            transform: translateX(5px);
+        }
+
+        .icon-box {
+            font-size: 1.2rem;
+            color: var(--gold);
+            margin-right: 20px;
+            width: 25px;
+        }
+
+        .text-box { text-align: left; }
+        .text-box h3 { font-size: 0.9rem; font-weight: 400; letter-spacing: 0.05em; }
+        .text-box p { font-size: 0.7rem; color: var(--muted); margin-top: 2px; }
+
+        /* Save CTA */
+        .save-btn {
+            margin-top: 30px;
+            width: 100%;
+            padding: 18px;
+            background: var(--gold);
+            border: none;
+            color: black;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .save-btn:hover {
+            background: var(--text);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
         }
     </style>
 </head>
 <body>
 
-<div class="main-card">
-    <!-- استخدام اللوجو اللي بعته -->
-    <img src="MW3.png" alt="Mario William Logo" class="logo-img">
-    
-    <p class="quote">"Behind every flag stood a thousand unseen jumps"</p>
+<canvas id="particle-canvas"></canvas>
 
-    <a href="tel:+201211121713" class="action-link">Call</a>
-    <a href="https://wa.me/201211121713" class="action-link">WhatsApp</a>
-    <a href="https://www.instagram.com/mario_hossam" class="action-link">Instagram</a>
-    <a href="mailto:mariohossam16@gmail.com" class="action-link">Email</a>
+<div class="container">
+    <div class="card">
+        <div class="monogram-container">
+            <svg class="monogram glow" viewBox="0 0 100 100">
+                <path d="M10 80 L35 20 L50 60 L65 20 L90 80 M25 80 L25 50 M75 80 L75 50" fill="none" stroke="currentColor" stroke-width="2"/>
+                <path d="M50 90 L50 10 M10 50 L90 50" stroke="currentColor" stroke-width="0.5" opacity="0.3"/>
+            </svg>
+        </div>
+        
+        <h1>Mario William</h1>
+        <div class="divider"></div>
+        <p class="quote">"Behind every flag stood a thousand unseen jumps."</p>
 
-    <button class="save-btn" onclick="downloadVCard()">Add to Contacts</button>
+        <div class="action-list">
+            <a href="tel:+201211121713" class="action-card">
+                <div class="icon-box"><i class="fas fa-phone"></i></div>
+                <div class="text-box">
+                    <h3>Call Me</h3>
+                    <p>Direct Contact</p>
+                </div>
+            </a>
+            <a href="https://wa.me/201211121713" class="action-card">
+                <div class="icon-box"><i class="fab fa-whatsapp"></i></div>
+                <div class="text-box">
+                    <h3>WhatsApp</h3>
+                    <p>Quick Conversation</p>
+                </div>
+            </a>
+            <a href="https://www.instagram.com/mario_hossam" class="action-card">
+                <div class="icon-box"><i class="fab fa-instagram"></i></div>
+                <div class="text-box">
+                    <h3>Instagram</h3>
+                    <p>Follow My Journey</p>
+                </div>
+            </a>
+            <a href="mailto:mariohossam16@gmail.com" class="action-card">
+                <div class="icon-box"><i class="fas fa-envelope"></i></div>
+                <div class="text-box">
+                    <h3>Email</h3>
+                    <p>Professional Contact</p>
+                </div>
+            </a>
+        </div>
+
+        <button class="save-btn" onclick="downloadVCard()">Save to Contacts</button>
+    </div>
 </div>
 
 <script>
+    // Particle background animation
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.vx = (Math.random() - 0.5) * 0.5;
+            this.vy = (Math.random() - 0.5) * 0.5;
+            this.size = Math.random() * 2;
+        }
+        draw() {
+            ctx.fillStyle = 'rgba(212, 175, 55, 0.15)';
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        }
+    }
+
+    for (let i = 0; i < 40; i++) particles.push(new Particle());
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => { p.update(); p.draw(); });
+        requestAnimationFrame(animate);
+    }
+    animate();
+
+    // vCard Generator
     function downloadVCard() {
-        const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:Mario William\nTEL;TYPE=CELL:+201211121713\nEMAIL:mariohossam16@gmail.com\nEND:VCARD`;
+        const vcard = `BEGIN:VCARD
+VERSION:3.0
+FN:Mario William
+TEL;TYPE=CELL:+201211121713
+EMAIL:mariohossam16@gmail.com
+NOTE:Instagram: @mario_hossam
+END:VCARD`;
         const blob = new Blob([vcard], { type: 'text/vcard' });
-        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'Mario_William.vcf'; a.click();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Mario_William.vcf';
+        a.click();
+        URL.revokeObjectURL(url);
     }
 </script>
+
 </body>
 </html>
